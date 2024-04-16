@@ -1,0 +1,7 @@
+// ==UserScript
+// @name testName //namespace anonDeveloper 
+//@ description DESCRIPTION BLAH
+// @include *
+// ==/UserScript
+document.getElementsByName("p1")[0].value = "<script>alert(1)</script>
+document.querySelector("path").click()
