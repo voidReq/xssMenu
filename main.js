@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         button
+// @name         xssMenu
 // @namespace    hi
 // @version      0.31
 // @description  Add sci-hub button on article page. Add sci-hub button after article link. Support Google scholar, bing academic and baidu xueshu. Jump CNKI English article to Chinese article.
@@ -7,43 +7,34 @@
 // @include      *
 // ==/UserScript==
 
-//https://www.htmldog.com/guides/javascript/advanced/creatingelements/
-//btn.style = "position:fixed; top:" + buttonY + "px; left:" + buttonX + "px; background-color: white; border: none; color: #8e8e8e; padding: 0px 0px; text-align: center; text-decoration: none; font-family: ; display: inline-block; font-size: 20px; margin: 0px 0px; cursor: pointer; width: 30px; height: 30px";
+var inputs = document.getElementsByTagName('input');
+//var textBox = document.getElementsByName("p1")[0]
 
-/*
-select.addEventListener('mouseover', function() {
-    alert(1);
-});
-*/
-
-
-
-var select = document.createElement("select");
-select.id = "mySelect";
-var payloads = ["<script>alert(1)</script>","<img src='#' onerror=alert(1) />","<b onmouseover=alert('Wufff!')>click me!</b>"];
-
-var select_width = 130;
+var payloads = [" ", "<script>alert(document.domain)</script>","<img src='#' onerror=alert(document.domain) />","<b onmouseover=alert(document.domain)>click me!</b>"];
+var select_width = 200;
 var select_height = 40;
-var selectX = document.documentElement.clientWidth - 400;
-var selectY = document.documentElement.clientHeight - 400;
 
 
-for (var i = 0; i < payloads.length; i++) {
-    var option = document.createElement("option");
-    option.value = payloads[i];
-    option.text = payloads[i];
-    select.appendChild(option);
+for (let i = 0; i < inputs.length; i++) {
+   var thisInput = inputs[i];
+   var select = document.createElement("select"+i);
+   select.id = "mySelect";
+   var inputRect = thisInput.getBoundingClientRect();
+   var selectX = inputRect.right + 65;
+   var selectY = inputRect.top - 10;
+   select.style = "position:absolute; top:" + selectY + "px; left:" + selectX + "px; background-color: #00ccff; border-radius: 10px; font-size: 20px; width:" + select_width + "px; height:" + select_height + "px";
+   select.style.opacity = "0.9";
+        select.onchange = function () {
+        document.getElementsByName("p1")[0].value = select.value
+   };
+   for (var a = 0; a < payloads.length; a++) {
+       var option = document.createElement("option");
+       option.value = payloads[a];
+       option.text = payloads[a];
+       select.appendChild(option);
+   }
+   inputs[i].parentNode.appendChild(select);
 }
 
 
-select.onchange = function () {
-    document.getElementsByName("p1")[0].value = select.value
-};
 
-
-
-select.style = "position:fixed; top:" + selectY + "px; left:" + selectX + "px; background-color: #00ccff; border-radius: 20px; font-size: 20px; cursor: pointer; width:" + select_width + "px; height:" + select_height + "px";
-select.style.opacity = "0.9";
-
-
-document.body.appendChild(select);
