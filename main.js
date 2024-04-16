@@ -20,9 +20,8 @@ var payloads = [" ", "<script>alert(document.domain)</script>","<img src='#' one
 var select_width = 200;
 var select_height = 40;
 
-
 function x(i, curVal) {
-    document.getElementById("mySelect" + i).value = curVal;
+    inputs[i].value = curVal; // Set the value directly into the text input
 }
 
 for (let i = 0; i < inputs.length; i++) {
@@ -40,9 +39,9 @@ for (let i = 0; i < inputs.length; i++) {
         option.text = payloads[a];
         select.appendChild(option);
     }
-    var curVal = select.value;
     select.onchange = function () {
-        x(i, select.value);
+        var curVal = select.value; // Update curVal when select value changes
+        x(i, curVal); // Pass the current value to the x function
     };
     inputs[i].parentNode.appendChild(select);
 }
