@@ -1,41 +1,49 @@
-// ==UserScript
-// @name testName //namespace anonDeveloper 
-//@ description DESCRIPTION BLAH
-// @include https://xss-quiz.int21h.jp/
+// ==UserScript==
+// @name         button
+// @namespace    hi
+// @version      0.31
+// @description  Add sci-hub button on article page. Add sci-hub button after article link. Support Google scholar, bing academic and baidu xueshu. Jump CNKI English article to Chinese article.
+// @author       Dingar
+// @include      *
 // ==/UserScript==
-const path = "pathToElement"
 
-let btn = document.createElement("button");
 //https://www.htmldog.com/guides/javascript/advanced/creatingelements/
-btn.setAttribute('onmouseover', "<script>alert(1)</script>")
-btn.innerHTML = "Hover over me!";
-var button_width = 70;
-var button_height = 30;
-var buttonX = document.documentElement.clientWidth - button_width;
-var buttonY = document.documentElement.clientHeight - document.documentElement.clientHeight;
-
 //btn.style = "position:fixed; top:" + buttonY + "px; left:" + buttonX + "px; background-color: white; border: none; color: #8e8e8e; padding: 0px 0px; text-align: center; text-decoration: none; font-family: ; display: inline-block; font-size: 20px; margin: 0px 0px; cursor: pointer; width: 30px; height: 30px";
-btn.style = "position:fixed; top:" + buttonY + "px; left:" + buttonX + "px; background-color: #00ccff; border-radius: 20px; font-size: 20px; cursor: pointer; width:" + button_width + "px; height:" + button_height + "px";
-btn.style.opacity = "0.5";
 
-btn.onclick = function () {
-    document.getElementsByName("p1")[0].value = "<script>alert(document.domain)</script>;"
-    document.querySelector(path).click()
+/*
+select.addEventListener('mouseover', function() {
+    alert(1);
+});
+*/
+
+
+
+var select = document.createElement("select");
+select.id = "mySelect";
+var payloads = ["<script>alert(1)</script>","<img src='#' onerror=alert(1) />","<b onmouseover=alert('Wufff!')>click me!</b>"];
+
+var select_width = 130;
+var select_height = 40;
+var selectX = document.documentElement.clientWidth - 400;
+var selectY = document.documentElement.clientHeight - 400;
+
+
+for (var i = 0; i < payloads.length; i++) {
+    var option = document.createElement("option");
+    option.value = payloads[i];
+    option.text = payloads[i];
+    select.appendChild(option);
+}
+
+
+select.onchange = function () {
+    document.getElementsByName("p1")[0].value = select.value
 };
 
-document.body.appendChild(btn);
-/*
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-*/
+
+
+select.style = "position:fixed; top:" + selectY + "px; left:" + selectX + "px; background-color: #00ccff; border-radius: 20px; font-size: 20px; cursor: pointer; width:" + select_width + "px; height:" + select_height + "px";
+select.style.opacity = "0.9";
+
+
+document.body.appendChild(select);
