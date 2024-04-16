@@ -7,16 +7,18 @@
 // @include      *
 // ==/UserScript==
 
-var inputs = document.getElementsByTagName('input');
+var allInputs = document.getElementsByTagName('input');
+var inputs = [];
+
+for (let i = 0; i < allInputs.length; i++) {
+    if (allInputs[i].type == "text") {
+        inputs.push(allInputs[i]);
+    }
+}
+
 var payloads = [" ", "<script>alert(document.domain)</script>","<img src='#' onerror=alert(document.domain) />","<b onmouseover=alert(document.domain)>click me!</b>"];
 var select_width = 200;
 var select_height = 40;
-
-for (let i = 0; i < inputs.length; i++) {
-    if(inputs[i].type != "text"){
-        delete inputs[i]
-    }
-}
 
 
 function x(i, curVal) {
