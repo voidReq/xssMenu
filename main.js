@@ -6,7 +6,9 @@
 const path = "pathToElement"
 
 let btn = document.createElement("button");
-btn.innerHTML = "Save";
+//https://www.htmldog.com/guides/javascript/advanced/creatingelements/
+btn.setAttribute('onmouseover', "<script>alert(1)</script>")
+btn.innerHTML = "Hover over me!";
 var button_width = 70;
 var button_height = 30;
 var buttonX = document.documentElement.clientWidth - button_width;
@@ -22,23 +24,6 @@ btn.onclick = function () {
 };
 
 document.body.appendChild(btn);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 // Close the dropdown menu if the user clicks outside of it
 window.onclick = function(event) {
