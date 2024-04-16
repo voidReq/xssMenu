@@ -10,7 +10,6 @@
 var payloads = [" ", "<script>alert(document.domain)</script>","<img src='#' onerror=alert(document.domain) />","<b onmouseover=alert(document.domain)>click me!</b>"];
 var select_width = 200;
 var select_height = 40;
-
 var allTextInputs = document.getElementsByTagName('input');
 var inputs = [];
 
@@ -22,7 +21,6 @@ for (let i = 0; i < allTextInputs.length; i++) {
 
 var allTextAreas = document.getElementsByTagName('textarea');
 //allTextAreas[i].value = "deca"
-
 inputs = inputs.concat(allTextAreas)
 
 function x(i, curVal) {
@@ -31,6 +29,7 @@ function x(i, curVal) {
 
 
 for (let i = 0; i < inputs.length; i++) {
+
     if(inputs[i].type=="text"){
         var thisInput = inputs[i];
         var select = document.createElement("select");
@@ -38,8 +37,9 @@ for (let i = 0; i < inputs.length; i++) {
         var inputRect = thisInput.getBoundingClientRect();
         var selectX = inputRect.right + 65;
         var selectY = inputRect.top - 10;
-        select.style = "position:absolute; top:" + selectY + "px; left:" + selectX + "px; background-color: ##7c0999; border-radius: 10px; font-size: 20px; width:" + select_width + "px; height:" + select_height + "px";
+        select.style = "position:absolute; top:" + selectY + "px; left:" + selectX + "px; background-color: #7c0999; border-radius: 10px; font-size: 20px; width:" + select_width + "px; height:" + select_height + "px";
         select.style.opacity = "0.9";
+
         for (let a = 0; a < payloads.length; a++) {
             var option = document.createElement("option");
             option.value = payloads[a];
@@ -50,6 +50,6 @@ for (let i = 0; i < inputs.length; i++) {
             var curVal = select.value;
             x(i, curVal);
         };
-    inputs[i].parentNode.appendChild(select);
-}
+        inputs[i].parentNode.appendChild(select);
+    }
 }
