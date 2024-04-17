@@ -29,7 +29,7 @@ function x(i, curVal) {
 
 
 for (let i = 0; i < inputs.length; i++) {
-
+    console.log(inputs[i])
     if(inputs[i].type=="text"){
         var thisInput = inputs[i];
         var select = document.createElement("select");
@@ -52,4 +52,33 @@ for (let i = 0; i < inputs.length; i++) {
         };
         inputs[i].parentNode.appendChild(select);
     }
+/*
+    else if(inputs[i][0].type=="textarea"){
+        var thisText = inputs[i][0];
+        var selected = document.createElement("select");
+        selected.id = "mySelect" + i;
+        var textOffsetY = thisText.offsetHeight;
+        console.log(textOffsetY)
+        
+        //var inputRect = thisInput.getBoundingClientRect();
+        //var selectX = inputRect.right + 65;
+        //var selectY = inputRect.top - 10;
+        
+        //selected.style = "position:absolute; top:" + selectY + "px; left:" + selectX + "px; background-color: #7c0999; border-radius: 10px; font-size: 20px; width:" + select_width + "px; height:" + select_height + "px";
+        selected.style.opacity = "0.9";
+
+        for (let a = 0; a < payloads.length; a++) {
+            var anOption = document.createElement("option");
+            anOption.value = payloads[a];
+            anOption.text = payloads[a];
+            selected.appendChild(option);
+        }
+        selected.onchange = function () {
+            var curVal = selected.value;
+            x(i, curVal);
+        };
+        inputs[i].parentNode.appendChild(selected);
+    }
+
+*/
 }
